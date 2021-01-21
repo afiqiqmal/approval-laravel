@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/afiqiqmal/approval-laravel.svg?style=flat-square)](https://packagist.org/packages/afiqiqmal/approval-laravel)
 [![Total Downloads](https://img.shields.io/packagist/dt/afiqiqmal/approval-laravel.svg?style=flat-square)](https://packagist.org/packages/afiqiqmal/approval-laravel)
-
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/mhi9388?locale.x=en_US)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -85,3 +85,5 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+<a href="https://www.paypal.com/paypalme/mhi9388?locale.x=en_US"><img src="https://i.imgur.com/Y2gqr2j.png" height="40"></a>  
