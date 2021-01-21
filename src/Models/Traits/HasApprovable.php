@@ -48,7 +48,7 @@ trait HasApprovable
      */
     public function redirectRouteBasedOnPermission($route1, $route2): \Illuminate\Http\RedirectResponse
     {
-        if (!config('approval.enabled')) {
+        if (! config('approval.enabled')) {
             return redirect()->route($route1);
         }
 
