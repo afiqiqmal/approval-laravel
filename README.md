@@ -63,6 +63,20 @@ List all items with not approve
 Model::getQuery()->onlyNotApprove()->get(); 
 ```
 
+Approve and Reject Item
+```php
+$item = Model::first();
+$item->approve()->approve();
+$item->approve()->reject();
+```
+
+Vice versa to get the approval model
+```php
+$approval = Approval::first();
+
+$approval->approvable; // Get model
+
+```
 
 
 ## Changelog
