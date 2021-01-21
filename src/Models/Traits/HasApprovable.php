@@ -50,7 +50,7 @@ trait HasApprovable
      */
     public function redirectRouteBasedOnPermission($route1, $route2, $message1 = null, $message2 = null): \Illuminate\Http\RedirectResponse
     {
-        if (!config('approval.enabled')) {
+        if (! config('approval.enabled')) {
             return redirect()->route($route1)->withMessage($message1);
         }
 
