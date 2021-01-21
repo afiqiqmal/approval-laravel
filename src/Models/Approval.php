@@ -10,6 +10,7 @@ use Afiqiqmal\Approval\Observers\ApprovableObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Approval extends Model
 {
@@ -142,6 +143,7 @@ class Approval extends Model
 
         if ($needApproval) {
             $model->approval()->create([
+                'hashslug' => Str::random(60),
                 'approved' => false,
                 'status' => 1,
                 'modification' => [
@@ -152,6 +154,7 @@ class Approval extends Model
             self::afterEvent($model);
         } else {
             $model->approval()->create([
+                'hashslug' => Str::random(60),
                 'approved' => true,
                 'status' => 2,
                 'modification' => [
