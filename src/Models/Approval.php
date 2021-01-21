@@ -17,6 +17,7 @@ class Approval extends Model
     use HasFactory;
 
     protected $fillable = [
+        'hashslug',
         'approvable_id',
         'approvable_type',
         'approved',
