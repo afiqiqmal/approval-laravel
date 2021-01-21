@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Afiqiqmal\Approval\Tests;
 
 class ExampleTest extends TestCase
 {

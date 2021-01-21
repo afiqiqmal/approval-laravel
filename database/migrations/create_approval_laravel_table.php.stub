@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateApprovalTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('approval-laravel_table', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('hashslug')->unique();
+
+            $table->bigInteger('approvable_id')->nullable()->index();
+            $table->string('approvable_type')->nullable()->index();
+
+            $table->integer('status')->default(1);
+            $table->boolean('approved')->default(false)->index();
+
+            $table->text('remarks')->nullable();
+
+            $table->json('modification')->nullable();
+
+            $table->unsignedBigInteger('approved_by')->nullable()->index();
+            $table->unsignedBigInteger('rejected_by')->nullable()->index();
+
+            $table->dateTime('approved_at')->nullable();
+            $table->dateTime('rejected_at')->nullable();
+            $table->timestamps();
+
+            $table->index(['approvable_id', 'approvable_type']);
+
+            $table->foreign('approved_by')
+                ->references('id')
+                ->on(config('approval.model.approve_by'))
+                ->nullOnDelete();
+
+            $table->foreign('rejected_by')
+                ->references('id')
+                ->on(config('approval.model.reject_by'))
+                ->nullOnDelete();
+        });
+    }
+}

@@ -1,22 +1,23 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "afiqiqmal/approval-laravel",
+    "description": "approval-laravel",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "afiqiqmal",
+        "approval-laravel"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/afiqiqmal/approval-laravel",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Hafiq",
+            "email": "hafiqiqmal93@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/contracts": "^8.0"
+        "illuminate/contracts": "^6 || ^7 || ^8",
+        "illuminate/support": "^6 || ^7 || ^8"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
@@ -24,13 +25,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Afiqiqmal\\Approval\\": "src",
+            "Afiqiqmal\\Approval\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Afiqiqmal\\Approval\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +45,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Afiqiqmal\\Approval\\ApprovalServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "Approval": "Afiqiqmal\\Approval\\ApprovalFacade"
             }
         }
     },
