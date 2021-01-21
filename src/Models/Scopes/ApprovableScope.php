@@ -25,7 +25,6 @@ class ApprovableScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-
     }
 
     /**
@@ -50,8 +49,7 @@ class ApprovableScope implements Scope
     protected function addReject(Builder $builder)
     {
         $builder->macro('reject', function (Builder $builder, $reason = null) {
-
-            if (!config('approval.enabled')) {
+            if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 
@@ -72,7 +70,7 @@ class ApprovableScope implements Scope
     protected function addApprove(Builder $builder)
     {
         $builder->macro('approve', function (Builder $builder, $reason = null) {
-            if (!config('approval.enabled')) {
+            if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 

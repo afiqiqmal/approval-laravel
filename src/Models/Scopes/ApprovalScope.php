@@ -3,7 +3,6 @@
 
 namespace Afiqiqmal\Approval\Models\Scopes;
 
-
 use Afiqiqmal\Approval\Approval;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -55,7 +54,7 @@ class ApprovalScope implements Scope
                 foreach ($models as $model) {
                     $flag = false;
 
-                    if (!$model->approval) {
+                    if (! $model->approval) {
                         Approval::updateApproval($model, 'delete');
                         $flag = true;
                     } else {
@@ -65,7 +64,7 @@ class ApprovalScope implements Scope
                         }
                     }
 
-                    if (!$flag) {
+                    if (! $flag) {
                         $model->delete();
                     }
                 }
@@ -84,11 +83,11 @@ class ApprovalScope implements Scope
     protected function addIncludeNotApprove(Builder $builder)
     {
         $builder->macro('includeNotApprove', function (Builder $builder, bool $includeNotApprove = true) {
-            if (!config('approval.enabled')) {
+            if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 
-            if (!$includeNotApprove) {
+            if (! $includeNotApprove) {
                 return $builder;
             }
 
@@ -105,7 +104,7 @@ class ApprovalScope implements Scope
     protected function addOnlyNotApprove(Builder $builder)
     {
         $builder->macro('onlyNotApprove', function (Builder $builder) {
-            if (!config('approval.enabled')) {
+            if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 
@@ -126,7 +125,7 @@ class ApprovalScope implements Scope
     protected function addWithApprovedOrNot(Builder $builder)
     {
         $builder->macro('withApprovedOrNot', function (Builder $builder, $approvedOnly = true) {
-            if (!config('approval.enabled')) {
+            if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 

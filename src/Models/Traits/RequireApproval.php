@@ -3,7 +3,6 @@
 
 namespace Afiqiqmal\Approval\Models\Traits;
 
-
 use Afiqiqmal\Approval\Models\Approval;
 use Afiqiqmal\Approval\Models\ApprovalModelContent;
 use Afiqiqmal\Approval\Models\Scopes\ApprovalScope;
@@ -44,12 +43,14 @@ trait RequireApproval
     public function delete()
     {
         if (config('approval.enabled') && config('approval.when.delete')) {
-            if (!$this->approval) {
+            if (! $this->approval) {
                 Approval::updateApproval($this, 'delete');
+
                 return true;
             } else {
                 if (isset($this->approval->modification['mark']) && $this->approval->modification['mark'] != 'delete') {
                     Approval::updateApproval($this, 'delete');
+
                     return true;
                 }
             }

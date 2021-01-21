@@ -2,9 +2,9 @@
 
 namespace Afiqiqmal\Approval\Tests;
 
+use Afiqiqmal\Approval\ApprovalServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Afiqiqmal\Approval\ApprovalServiceProvider;
 
 class TestCase extends Orchestra
 {

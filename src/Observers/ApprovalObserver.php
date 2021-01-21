@@ -2,7 +2,6 @@
 
 namespace Afiqiqmal\Approval\Observers;
 
-use Afiqiqmal\Approval\Events\ApprovalRequested;
 use Afiqiqmal\Approval\Models\Approval;
 use Illuminate\Database\Eloquent\Model;
 
