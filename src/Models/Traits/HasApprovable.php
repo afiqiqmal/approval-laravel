@@ -7,7 +7,6 @@ trait HasApprovable
 {
     public static function bootHasApprovable()
     {
-
     }
 
     public function canMakeApproval()

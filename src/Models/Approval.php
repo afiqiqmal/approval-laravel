@@ -25,15 +25,15 @@ class Approval extends Model
         'approved_by',
         'rejected_by',
         'approved_at',
-        'rejected_at'
+        'rejected_at',
     ];
 
     protected $casts = [
-        'modification' => 'json'
+        'modification' => 'json',
     ];
 
     protected $hidden = [
-        'approvable_type'
+        'approvable_type',
     ];
 
     protected static function boot()
@@ -99,7 +99,7 @@ class Approval extends Model
     {
         return URL::temporarySignedRoute('approval.link', now()->addHours(2), [
             'approval' => encrypt($this->hashslug),
-            'action' => $action ? encrypt($action) : null
+            'action' => $action ? encrypt($action) : null,
         ]);
     }
 
@@ -114,8 +114,8 @@ class Approval extends Model
             'rejected_by' => null,
             'rejected_at' => null,
             'modification' => [
-                'mark' => 'approved'
-            ]
+                'mark' => 'approved',
+            ],
         ];
     }
 
@@ -130,8 +130,8 @@ class Approval extends Model
             'approved_by' => null,
             'approved_at' => null,
             'modification' => [
-                'mark' => 'rejected'
-            ]
+                'mark' => 'rejected',
+            ],
         ];
     }
 
@@ -145,19 +145,18 @@ class Approval extends Model
                 'approved' => false,
                 'status' => 1,
                 'modification' => [
-                    'mark' => $modification
-                ]
+                    'mark' => $modification,
+                ],
             ]);
 
             self::afterEvent($model);
-
         } else {
             $model->approval()->create([
                 'approved' => true,
                 'status' => 2,
                 'modification' => [
-                    'mark' => $modification
-                ]
+                    'mark' => $modification,
+                ],
             ]);
         }
 
@@ -179,21 +178,20 @@ class Approval extends Model
                     'approved' => false,
                     'status' => 1,
                     'modification' => [
-                        'mark' => $modification
+                        'mark' => $modification,
                     ],
-                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null
+                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null,
                 ]);
 
                 self::afterEvent($model);
-
             } else {
                 $model->approval()->update([
                     'approved' => true,
                     'status' => 2,
                     'modification' => [
-                        'mark' => $modification
+                        'mark' => $modification,
                     ],
-                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null
+                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null,
                 ]);
             }
         }

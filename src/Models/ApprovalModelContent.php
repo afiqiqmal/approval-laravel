@@ -3,7 +3,6 @@
 
 namespace Afiqiqmal\Approval\Models;
 
-
 class ApprovalModelContent
 {
     protected $title;
@@ -18,6 +17,7 @@ class ApprovalModelContent
     public function setTitle($title): ApprovalModelContent
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -28,6 +28,7 @@ class ApprovalModelContent
     public function setDescription($body): ApprovalModelContent
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -38,6 +39,7 @@ class ApprovalModelContent
     public function setType($type): ApprovalModelContent
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -48,6 +50,7 @@ class ApprovalModelContent
     public function setWho($who): ApprovalModelContent
     {
         $this->who = $who;
+
         return $this;
     }
 
