@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/afiqiqmal/approval-laravel.svg?style=flat-square)](https://packagist.org/packages/afiqiqmal/approval-laravel)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/mhi9388?locale.x=en_US)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+![](https://banners.beyondco.de/Approval.png?theme=dark&packageManager=composer+require&packageName=afiqiqmal%2Fapproval-laravel&pattern=dominos&style=style_1&description=&md=1&showWatermark=0&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg)
 
 ## Installation
 
