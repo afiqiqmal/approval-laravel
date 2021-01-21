@@ -8,7 +8,7 @@ class CreateApprovalTable extends Migration
 {
     public function up()
     {
-        Schema::create('approval-laravel_table', function (Blueprint $table) {
+        Schema::create(config('approval.table.name'), function (Blueprint $table) {
             $table->id();
 
             $table->string('hashslug')->unique();
@@ -34,12 +34,12 @@ class CreateApprovalTable extends Migration
 
             $table->foreign('approved_by')
                 ->references('id')
-                ->on(config('approval.model.approve_by'))
+                ->on(config('approval.table.approve_by'))
                 ->nullOnDelete();
 
             $table->foreign('rejected_by')
                 ->references('id')
-                ->on(config('approval.model.reject_by'))
+                ->on(config('approval.table.reject_by'))
                 ->nullOnDelete();
         });
     }
