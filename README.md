@@ -1,7 +1,6 @@
 # Approval Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/afiqiqmal/approval-laravel.svg?style=flat-square)](https://packagist.org/packages/afiqiqmal/approval-laravel)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/afiqiqmal/approval-laravel/run-tests?label=tests)](https://github.com/afiqiqmal/approval-laravel/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/afiqiqmal/approval-laravel.svg?style=flat-square)](https://packagist.org/packages/afiqiqmal/approval-laravel)
 
 
