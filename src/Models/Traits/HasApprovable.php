@@ -44,18 +44,20 @@ trait HasApprovable
     /**
      * @param $route1
      * @param $route2
+     * @param null $message1
+     * @param null $message2
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirectRouteBasedOnPermission($route1, $route2): \Illuminate\Http\RedirectResponse
+    public function redirectRouteBasedOnPermission($route1, $route2, $message1 = null, $message2 = null): \Illuminate\Http\RedirectResponse
     {
         if (!config('approval.enabled')) {
-            return redirect()->route($route1);
+            return redirect()->route($route1)->withMessage($message1);
         }
 
         if ($this->hasFullApprovalPermission()) {
-            return redirect()->route($route1);
+            return redirect()->route($route1)->withMessage($message1);
         }
 
-        return redirect()->route($route2);
+        return redirect()->route($route2)->withMessage($message2);
     }
 }
