@@ -11,6 +11,6 @@ class ApprovalFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'approval-laravel';
+        return 'approval';
     }
 }

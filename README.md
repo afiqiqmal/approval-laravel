@@ -28,6 +28,35 @@ php artisan vendor:publish --provider="Afiqiqmal\Approval\ApprovalServiceProvide
 
 ## Usage
 
+### Add `RequireApproval` trait to the model
+
+class Entity extends Model
+{
+    use RequireApproval;
+
+    //plenty of public function can be customize
+}
+
+### Add `HasApprovable` trait to the User Model
+class User extends Authenticable
+{
+    use HasApprovable;
+    ...
+    ...
+}
+
+### Query
+
+Include all items including not approve
+```
+Mode::getQuery()->includeNotApprove()->get(); 
+```
+
+List all items with not approve
+```
+Mode::getQuery()->onlyNotApprove()->get(); 
+```
+
 
 
 ## Changelog

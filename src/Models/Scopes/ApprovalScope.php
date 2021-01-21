@@ -4,7 +4,7 @@
 namespace Afiqiqmal\Approval\Models\Scopes;
 
 
-use Afiqiqmal\Approval\Approval;
+use Afiqiqmal\Approval\Models\Approval;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
