@@ -139,8 +139,8 @@ class Approval extends Model
 
     public static function createApproval($model, $modification = 'create')
     {
-        $needApproval = method_exists(auth()->user(), 'hasFullApprovalPermission') &&
-            ! auth()->user()->hasFullApprovalPermission();
+        $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
+            ! auth()->user()->canMakeApprovalOrReject();
 
         if ($needApproval) {
             $model->approval()->create([
@@ -171,8 +171,8 @@ class Approval extends Model
 
     public static function updateApproval($model, $modification = 'update')
     {
-        $needApproval = method_exists(auth()->user(), 'hasFullApprovalPermission') &&
-            ! auth()->user()->hasFullApprovalPermission();
+        $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
+            ! auth()->user()->canMakeApprovalOrReject();
 
         if (! $model->approval) {
             self::createApproval($model, $modification);

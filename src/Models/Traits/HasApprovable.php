@@ -21,6 +21,11 @@ trait HasApprovable
 
     public function hasFullApprovalPermission()
     {
+        return $this->canMakeApproval() && $this->canMakeReject();
+    }
+
+    public function canMakeApprovalOrReject()
+    {
         return $this->canMakeApproval() || $this->canMakeReject();
     }
 }
