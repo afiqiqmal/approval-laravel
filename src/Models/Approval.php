@@ -35,10 +35,6 @@ class Approval extends Model
         'modification' => 'json',
     ];
 
-    protected $hidden = [
-        'approvable_type',
-    ];
-
     protected static function boot()
     {
         parent::boot();
