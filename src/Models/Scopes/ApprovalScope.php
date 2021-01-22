@@ -15,7 +15,7 @@ class ApprovalScope implements Scope
      *
      * @var string[]
      */
-    protected $extensions = ['IncludeNotApprove', 'OnlyNotApprove', 'WithApprovedOrNot'];
+    protected $extensions = ['IncludeNotApprove', 'OnlyNotApprove', 'WithApprovedOrNot', 'WithPending'];
 
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -82,13 +82,15 @@ class ApprovalScope implements Scope
      */
     protected function addIncludeNotApprove(Builder $builder)
     {
-        $builder->macro('includeNotApprove', function (Builder $builder, bool $includeNotApprove = true) {
+        $builder->macro('includeNotApprove', function (Builder $builder, $status = null) {
             if (! config('approval.enabled')) {
                 return $builder->withoutGlobalScope($this);
             }
 
-            if (! $includeNotApprove) {
-                return $builder;
+            if ($status) {
+                return $builder->withoutGlobalScope($this)->with('approval')->doesntHave('approval')->orWhereHas('approval', function ($query) use ($status) {
+                    return $query->where('status', $status);
+                });
             }
 
             return $builder->withoutGlobalScope($this)->with('approval');
@@ -134,6 +136,29 @@ class ApprovalScope implements Scope
             }
 
             return $builder->onlyNotApprove();
+        });
+    }
+
+    /**
+     * Add the include Not Approve extension to the builder.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @return void
+     */
+    protected function addWithPending(Builder $builder)
+    {
+        $builder->macro('withPendingOrOnlyApproval', function (Builder $builder, $withPending = true) {
+            if (! config('approval.enabled')) {
+                return $builder->withoutGlobalScope($this);
+            }
+
+            if ($withPending) {
+                return $builder->includeNotApprove()->doesntHave('approval')->orWhereHas('approval', function ($query) {
+                    return $query->where('status', 1);
+                });
+            }
+
+            return $builder->includeNotApprove()->whereHas('approval');
         });
     }
 }
