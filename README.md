@@ -66,8 +66,8 @@ Model::getQuery()->onlyNotApprove()->get();
 Approve and Reject Item
 ```php
 $item = Model::first();
-$item->approve()->approve();
-$item->approve()->reject();
+$item->approve()->approve($remarks); // optional remarks
+$item->approve()->reject($remarks); // optional remarks
 ```
 
 Vice versa to get the approval model
