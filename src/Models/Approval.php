@@ -24,6 +24,7 @@ class Approval extends Model
         'remarks',
         'status',
         'modification',
+        'mark',
         'approved_by',
         'rejected_by',
         'approved_at',
@@ -82,10 +83,19 @@ class Approval extends Model
 
     public function approve($reason = null)
     {
-        if ($this->modification['mark'] == 'delete') {
+        if ($this->mark == 'delete') {
             $this->approvable()->delete();
         } else {
-            $this->update(self::approvedArray($reason));
+            $this->update([
+                'remarks' => $reason,
+                'approved' => true,
+                'status' => 2,
+                'approved_by' => auth('cms')->id(),
+                'approved_at' => now(),
+                'rejected_by' => null,
+                'rejected_at' => null,
+                'mark' => 'approved',
+            ]);
         }
 
         event(new Approved($this));
@@ -93,7 +103,17 @@ class Approval extends Model
 
     public function reject($reason = null)
     {
-        $this->update(self::rejectArray($reason));
+        $this->update([
+            'remarks' => $reason,
+            'approved' => false,
+            'status' => 3,
+            'rejected_by' => auth('cms')->id(),
+            'rejected_at' => now(),
+            'approved_by' => null,
+            'approved_at' => null,
+            'mark' => 'rejected',
+        ]);
+
         event(new Rejected($this));
     }
 
@@ -105,39 +125,7 @@ class Approval extends Model
         ]);
     }
 
-    public static function approvedArray($reason = null)
-    {
-        return [
-            'remarks' => $reason,
-            'approved' => true,
-            'status' => 2,
-            'approved_by' => auth('cms')->id(),
-            'approved_at' => now(),
-            'rejected_by' => null,
-            'rejected_at' => null,
-            'modification' => [
-                'mark' => 'approved',
-            ],
-        ];
-    }
-
-    public static function rejectArray($reason = null)
-    {
-        return [
-            'remarks' => $reason,
-            'approved' => false,
-            'status' => 3,
-            'rejected_by' => auth('cms')->id(),
-            'rejected_at' => now(),
-            'approved_by' => null,
-            'approved_at' => null,
-            'modification' => [
-                'mark' => 'rejected',
-            ],
-        ];
-    }
-
-    public static function createApproval($model, $modification = 'create')
+    public static function createApproval($model, $mark = 'create')
     {
         $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
             ! auth()->user()->canMakeApprovalOrReject();
@@ -147,9 +135,7 @@ class Approval extends Model
                 'hashslug' => Str::random(60),
                 'approved' => false,
                 'status' => 1,
-                'modification' => [
-                    'mark' => $modification,
-                ],
+                'mark' => $mark,
             ]);
 
             self::afterEvent($model);
@@ -158,9 +144,7 @@ class Approval extends Model
                 'hashslug' => Str::random(60),
                 'approved' => true,
                 'status' => 2,
-                'modification' => [
-                    'mark' => $modification,
-                ],
+                'mark' => $mark,
             ]);
         }
 
@@ -169,22 +153,20 @@ class Approval extends Model
         }
     }
 
-    public static function updateApproval($model, $modification = 'update')
+    public static function updateApproval($model, $mark = 'update')
     {
         $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
             ! auth()->user()->canMakeApprovalOrReject();
 
         if (! $model->approval) {
-            self::createApproval($model, $modification);
+            self::createApproval($model, $mark);
         } else {
             if ($needApproval) {
                 $model->approval()->update([
                     'approved' => false,
                     'status' => 1,
-                    'modification' => [
-                        'mark' => $modification,
-                    ],
-                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null,
+                    'mark' => $mark,
+                    'remarks' => $mark == 'delete' ? 'Request for Deletion' : null,
                 ]);
 
                 self::afterEvent($model);
@@ -192,10 +174,8 @@ class Approval extends Model
                 $model->approval()->update([
                     'approved' => true,
                     'status' => 2,
-                    'modification' => [
-                        'mark' => $modification,
-                    ],
-                    'remarks' => $modification == 'delete' ? 'Request for Deletion' : null,
+                    'mark' => $mark,
+                    'remarks' => $mark == 'delete' ? 'Request for Deletion' : null,
                 ]);
             }
         }

@@ -17,6 +17,9 @@ class CreateApprovalTable extends Migration
             $table->string('approvable_type')->nullable()->index();
 
             $table->integer('status')->default(1);
+
+            $table->string('mark')->nullable();
+
             $table->boolean('approved')->default(false)->index();
 
             $table->text('remarks')->nullable();
@@ -42,5 +45,10 @@ class CreateApprovalTable extends Migration
                 ->on(config('approval.table.reject_by'))
                 ->nullOnDelete();
         });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists(config('approval.table.name'));
     }
 }

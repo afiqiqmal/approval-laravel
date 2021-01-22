@@ -48,7 +48,7 @@ trait RequireApproval
 
                 return true;
             } else {
-                if (isset($this->approval->modification['mark']) && $this->approval->modification['mark'] != 'delete') {
+                if (isset($this->approval->mark) && $this->approval->mark != 'delete') {
                     Approval::updateApproval($this, 'delete');
 
                     return true;

@@ -58,7 +58,7 @@ class ApprovalScope implements Scope
                         Approval::updateApproval($model, 'delete');
                         $flag = true;
                     } else {
-                        if (isset($model->approval->modification['mark']) && $model->approval->modification['mark'] != 'delete') {
+                        if (isset($model->approval->mark) && $model->approval->mark != 'delete') {
                             Approval::updateApproval($model, 'delete');
                             $flag = true;
                         }
