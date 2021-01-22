@@ -15,7 +15,7 @@ class ApprovalScope implements Scope
      *
      * @var string[]
      */
-    protected $extensions = ['IncludeNotApprove', 'OnlyNotApprove', 'WithApprovedOrNot', 'WithPending'];
+    protected $extensions = ['IncludeNotApprove', 'OnlyNotApprove', 'WithApprovedOrNot', 'WithPendingOrOnlyApproval'];
 
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -145,7 +145,7 @@ class ApprovalScope implements Scope
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addWithPending(Builder $builder)
+    protected function addWithPendingOrOnlyApproval(Builder $builder)
     {
         $builder->macro('withPendingOrOnlyApproval', function (Builder $builder, $withPending = true) {
             if (! config('approval.enabled')) {
