@@ -43,15 +43,21 @@ trait RequireApproval
     public function delete()
     {
         if (config('approval.enabled') && config('approval.when.delete')) {
-            if (! $this->approval) {
-                Approval::updateApproval($this, 'delete');
 
-                return true;
-            } else {
-                if (isset($this->approval->mark) && $this->approval->mark != 'delete') {
+            $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
+                ! auth()->user()->canMakeApprovalOrReject();
+
+            if ($needApproval) {
+                if (!$this->approval) {
                     Approval::updateApproval($this, 'delete');
 
                     return true;
+                } else {
+                    if (isset($this->approval->mark) && $this->approval->mark != 'delete') {
+                        Approval::updateApproval($this, 'delete');
+
+                        return true;
+                    }
                 }
             }
         }
