@@ -37,7 +37,7 @@ class Approval extends Model
     ];
 
     protected $appends = [
-        'approvable_type_formatted'
+        'approvable_type_formatted',
     ];
 
     protected static function boot()
