@@ -9,6 +9,7 @@ use Afiqiqmal\Approval\Models\Scopes\ApprovableScope;
 use Afiqiqmal\Approval\Observers\ApprovableObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -35,6 +36,10 @@ class Approval extends Model
         'modification' => 'json',
     ];
 
+    protected $appends = [
+        'approvable_type_formatted'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -44,7 +49,7 @@ class Approval extends Model
 
     public function approvable()
     {
-        return $this->morphTo(__FUNCTION__, 'approvable_type', 'approvable_id')->includeNotApprove()->withTrashed();
+        return $this->morphTo(__FUNCTION__, 'approvable_type', 'approvable_id')->withoutGlobalScopes()->withTrashed();
     }
 
     public function rejectedBy()
@@ -75,6 +80,19 @@ class Approval extends Model
     public function scopePending($query)
     {
         return $query->where('status', 1);
+    }
+
+    public function scopeFilter($query, array $through = [])
+    {
+        return app(Pipeline::class)
+            ->send($query)
+            ->through($through)
+            ->thenReturn();
+    }
+
+    public function getApprovableTypeFormattedAttribute()
+    {
+        return trim(ucwords(implode(' ', preg_split('/(?=[A-Z])/', class_basename($this->attributes['approvable_type'])))));
     }
 
     public function approve($reason = null)
