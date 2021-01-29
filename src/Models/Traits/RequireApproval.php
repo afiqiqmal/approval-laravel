@@ -43,12 +43,11 @@ trait RequireApproval
     public function delete()
     {
         if (config('approval.enabled') && config('approval.when.delete')) {
-
             $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
                 ! auth()->user()->canMakeApprovalOrReject();
 
             if ($needApproval) {
-                if (!$this->approval) {
+                if (! $this->approval) {
                     Approval::updateApproval($this, 'delete');
 
                     return true;
