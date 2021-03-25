@@ -154,9 +154,7 @@ class ApprovalScope implements Scope
 
             if ($withPending) {
                 return $builder->where(function ($query) {
-                    $query->includeNotApprove()->doesntHave('approval')->orWhereHas('approval', function ($query) {
-                        return $query->whereIn('status', [1,2]);
-                    });
+                    $query->includeNotApprove()->doesntHave('approval')->orWhereHas('approval');
                 });
             }
 
