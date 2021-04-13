@@ -151,7 +151,7 @@ class Approval extends Model
                 'status' => 1,
                 'mark' => $mark,
                 'remarks' => 'New Data',
-                'modification' => json_encode($model->getDirty())
+                'modification' => json_encode($model->getDirty()),
             ]);
 
             self::afterEvent($model);
@@ -162,7 +162,7 @@ class Approval extends Model
                 'status' => 2,
                 'mark' => $mark,
                 'remarks' => 'New Data',
-                'modification' => json_encode($model->getDirty())
+                'modification' => json_encode($model->getDirty()),
 
             ]);
         }
@@ -186,7 +186,7 @@ class Approval extends Model
                     'status' => 1,
                     'mark' => $mark,
                     'remarks' => $mark == 'delete' ? 'Request for Deletion' : ($mark == 'update' ? 'Request for Information Update' : null),
-                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null
+                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null,
                 ]);
 
                 self::afterEvent($model);
@@ -196,7 +196,7 @@ class Approval extends Model
                     'status' => 2,
                     'mark' => $mark,
                     'remarks' => $mark == 'delete' ? 'Request for Deletion' : ($mark == 'update' ? 'Request for Information Update' : null),
-                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null
+                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null,
                 ]);
             }
         }
