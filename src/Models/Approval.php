@@ -49,12 +49,15 @@ class Approval extends Model
 
     private static function getMarkRemark($mark)
     {
-        if ($mark == 'create')
+        if ($mark == 'create') {
             return "New Data";
-        if ($mark == 'update')
+        }
+        if ($mark == 'update') {
             return "Request for Information Update";
-        if ($mark == 'delete')
+        }
+        if ($mark == 'delete') {
             return "Request for Deletion";
+        }
 
         return null;
     }
@@ -163,7 +166,7 @@ class Approval extends Model
                 'status' => 1,
                 'mark' => $mark,
                 'remarks' => self::getMarkRemark($mark),
-                'modification' => json_encode($model->getDirty())
+                'modification' => json_encode($model->getDirty()),
             ]);
 
             self::afterEvent($model);
@@ -174,7 +177,7 @@ class Approval extends Model
                 'status' => 2,
                 'mark' => $mark,
                 'remarks' => self::getMarkRemark($mark),
-                'modification' => json_encode($model->getDirty())
+                'modification' => json_encode($model->getDirty()),
 
             ]);
         }
@@ -198,7 +201,7 @@ class Approval extends Model
                     'status' => 1,
                     'mark' => $mark,
                     'remarks' => self::getMarkRemark($mark),
-                    'modification' => json_encode($model->getDirty())
+                    'modification' => json_encode($model->getDirty()),
                 ]);
 
                 self::afterEvent($model);
@@ -208,7 +211,7 @@ class Approval extends Model
                     'status' => 2,
                     'mark' => $mark,
                     'remarks' => self::getMarkRemark($mark),
-                    'modification' => json_encode($model->getDirty())
+                    'modification' => json_encode($model->getDirty()),
                 ]);
             }
         }
