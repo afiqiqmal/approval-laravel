@@ -47,6 +47,18 @@ class Approval extends Model
         static::observe(app(ApprovableObserver::class));
     }
 
+    private static function getMarkRemark($mark)
+    {
+        if ($mark == 'create')
+            return "New Data";
+        if ($mark == 'update')
+            return "Request for Information Update";
+        if ($mark == 'delete')
+            return "Request for Deletion";
+
+        return null;
+    }
+
     public function approvable()
     {
         return $this->morphTo(__FUNCTION__, 'approvable_type', 'approvable_id')->withoutGlobalScopes()->withTrashed();
@@ -150,7 +162,7 @@ class Approval extends Model
                 'approved' => false,
                 'status' => 1,
                 'mark' => $mark,
-                'remarks' => 'New Data',
+                'remarks' => self::getMarkRemark($mark),
                 'modification' => json_encode($model->getDirty())
             ]);
 
@@ -161,7 +173,7 @@ class Approval extends Model
                 'approved' => true,
                 'status' => 2,
                 'mark' => $mark,
-                'remarks' => 'New Data',
+                'remarks' => self::getMarkRemark($mark),
                 'modification' => json_encode($model->getDirty())
 
             ]);
@@ -185,8 +197,8 @@ class Approval extends Model
                     'approved' => false,
                     'status' => 1,
                     'mark' => $mark,
-                    'remarks' => $mark == 'delete' ? 'Request for Deletion' : ($mark == 'update' ? 'Request for Information Update' : null),
-                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null
+                    'remarks' => self::getMarkRemark($mark),
+                    'modification' => json_encode($model->getDirty())
                 ]);
 
                 self::afterEvent($model);
@@ -195,8 +207,8 @@ class Approval extends Model
                     'approved' => true,
                     'status' => 2,
                     'mark' => $mark,
-                    'remarks' => $mark == 'delete' ? 'Request for Deletion' : ($mark == 'update' ? 'Request for Information Update' : null),
-                    'modification' => $mark == 'update' ? json_encode($model->getDirty()) : null
+                    'remarks' => self::getMarkRemark($mark),
+                    'modification' => json_encode($model->getDirty())
                 ]);
             }
         }
