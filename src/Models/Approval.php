@@ -125,7 +125,7 @@ class Approval extends Model
             ]);
         }
 
-        self::triggerEvent('approved', $model);
+        self::triggerEvent('approved', $this);
     }
 
     public function reject($reason = null)
@@ -141,7 +141,7 @@ class Approval extends Model
             'mark' => 'rejected',
         ]);
 
-        self::triggerEvent('rejected', $model);
+        self::triggerEvent('rejected', $this);
     }
 
     public function getActionUrl($action = null)
