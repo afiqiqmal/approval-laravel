@@ -18,5 +18,11 @@ return [
         'create' => true,
         'update' => true,
         'delete' => true
-    ]
+    ],
+
+    'events' => [
+        'requested' => \Afiqiqmal\Approval\Events\ApprovalRequested::class,
+        'approved' => \Afiqiqmal\Approval\Events\Approved::class,
+        'rejected' => \Afiqiqmal\Approval\Events\Rejected::class,
+    ],
 ];

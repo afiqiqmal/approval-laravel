@@ -2,14 +2,12 @@
 
 namespace Afiqiqmal\Approval\Models;
 
-use Afiqiqmal\Approval\Events\ApprovalRequested;
-use Afiqiqmal\Approval\Events\Approved;
-use Afiqiqmal\Approval\Events\Rejected;
 use Afiqiqmal\Approval\Models\Scopes\ApprovableScope;
 use Afiqiqmal\Approval\Observers\ApprovableObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -127,7 +125,7 @@ class Approval extends Model
             ]);
         }
 
-        event(new Approved($this));
+        self::triggerEvent('approved', $model);
     }
 
     public function reject($reason = null)
@@ -143,7 +141,7 @@ class Approval extends Model
             'mark' => 'rejected',
         ]);
 
-        event(new Rejected($this));
+        self::triggerEvent('rejected', $model);
     }
 
     public function getActionUrl($action = null)
@@ -224,7 +222,13 @@ class Approval extends Model
     public static function afterEvent($model)
     {
         if ($model->enableNotification()) {
-            event(new ApprovalRequested($model));
+            self::triggerEvent('requested', $model);
         }
+    }
+
+    private static function triggerEvent($type, $model)
+    {
+        $event = Config::get("approval.events.$type");
+        event(new $event($model));
     }
 }
