@@ -52,21 +52,7 @@ class ApprovalScope implements Scope
                 $models = $builder->get();
 
                 foreach ($models as $model) {
-                    $flag = false;
-
-                    if (! $model->approval) {
-                        Approval::updateApproval($model, 'delete');
-                        $flag = true;
-                    } else {
-                        if (isset($model->approval->mark) && $model->approval->mark != 'delete') {
-                            Approval::updateApproval($model, 'delete');
-                            $flag = true;
-                        }
-                    }
-
-                    if (! $flag) {
-                        $model->delete();
-                    }
+                    $model->delete();
                 }
 
                 return true;
