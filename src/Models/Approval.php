@@ -154,7 +154,7 @@ class Approval extends Model
 
     public static function createApproval($model, $mark = 'create')
     {
-        $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
+        $needApproval = auth()->user() && method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
             ! auth()->user()->canMakeApprovalOrReject();
 
         if ($needApproval) {
@@ -187,7 +187,7 @@ class Approval extends Model
 
     public static function updateApproval($model, $mark = 'update')
     {
-        $needApproval = method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
+        $needApproval = auth()->user() && method_exists(auth()->user(), 'canMakeApprovalOrReject') &&
             ! auth()->user()->canMakeApprovalOrReject();
 
         if (! $model->approval) {
