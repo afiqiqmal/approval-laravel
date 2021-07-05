@@ -167,17 +167,18 @@ class Approval extends Model
                 'modification' => json_encode($model->getDirty()),
             ]);
 
-            self::afterEvent($model);
+            self::triggerEvent('requested', $model->approval);
         } else {
-            $model->approval()->create([
+            $approval = $model->approval()->create([
                 'hashslug' => Str::random(60),
                 'approved' => true,
                 'status' => 2,
                 'mark' => $mark,
                 'remarks' => self::getMarkRemark($mark),
                 'modification' => json_encode($model->getDirty()),
-
             ]);
+
+            self::triggerEvent('approved', $approval);
         }
 
         if (method_exists($model,  'flushCache')) {
@@ -202,7 +203,7 @@ class Approval extends Model
                     'modification' => json_encode($model->getDirty()),
                 ]);
 
-                self::afterEvent($model);
+                self::triggerEvent('requested', $model->approval);
             } else {
                 $model->approval()->update([
                     'approved' => true,
@@ -211,18 +212,13 @@ class Approval extends Model
                     'remarks' => self::getMarkRemark($mark),
                     'modification' => json_encode($model->getDirty()),
                 ]);
+
+                self::triggerEvent('approved', $model->approval);
             }
         }
 
         if (method_exists($model,  'flushCache')) {
             $model->flushCache();
-        }
-    }
-
-    public static function afterEvent($model)
-    {
-        if ($model->enableNotification()) {
-            self::triggerEvent('requested', $model);
         }
     }
 
