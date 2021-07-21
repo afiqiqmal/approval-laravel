@@ -6,6 +6,7 @@ return [
     'model' => [
         'reject_by' => \App\Models\User::class,
         'approve_by' => \App\Models\User::class,
+        'approval' => \Afiqiqmal\Approval\Models\Approval::class
     ],
 
     'tables' => [

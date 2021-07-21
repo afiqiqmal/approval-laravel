@@ -3,7 +3,6 @@
 
 namespace Afiqiqmal\Approval\Models\Traits;
 
-use Afiqiqmal\Approval\Models\Approval;
 use Afiqiqmal\Approval\Models\ApprovalModelContent;
 use Afiqiqmal\Approval\Models\Scopes\ApprovalScope;
 use Afiqiqmal\Approval\Observers\ApprovalObserver;
@@ -21,7 +20,7 @@ trait RequireApproval
      */
     public function approval(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
-        return $this->morphOne(Approval::class, 'approvable');
+        return $this->morphOne(config('approval.model.approval'), 'approvable');
     }
 
     /**
@@ -48,12 +47,12 @@ trait RequireApproval
 
             if ($needApproval) {
                 if (! $this->approval) {
-                    Approval::updateApproval($this, 'delete');
+                    app()->make(config('approval.model.approval'))::updateApproval($this, 'delete');
 
                     return true;
                 } else {
                     if (isset($this->approval->mark) && $this->approval->mark != 'delete') {
-                        Approval::updateApproval($this, 'delete');
+                        app()->make(config('approval.model.approval'))::updateApproval($this, 'delete');
 
                         return true;
                     }
